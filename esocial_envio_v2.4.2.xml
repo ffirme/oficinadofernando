@@ -1,0 +1,55 @@
+<!-- codificacao -->
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- namespace -->
+<eSocial xmlns="http://www.esocial.gov.br/schema/lote/eventos/envio/vx_x_x" >
+
+<!-- Xml do Evento -->
+<!-- assinatura digital -->
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<.../>
+</Signature>
+</eSocial>
+
+<!-- troca de mensagens entre os webservices padrão SOAP versão 1.1, com troca de mensagens XML no padrão StyleEnconding:Document/Literal 
+Exemplo de uma mensagem padrão SOAP -->
+
+<soap:Envelope
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+<soap:Header></soap:Header>
+<soap:Body>CORPO DA MENSAGEM SOAP</soap:Body>
+</soap:Envelope>
+
+
+<!-- Exemplo de um evento XML assinado digitalmente -->
+
+<?xml version="1.0" encoding="utf-8"?>
+<eSocial xmlns="http://www.esocial.gov.br/schema/evt/">
+<!-- Xml do Evento -->
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-
+20010315" />
+<SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsasha256"
+/>
+<Reference URI="">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#envelopedsignature"
+/>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-
+20010315" />
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+<DigestValue>CFJEIy1dUko99nNUW/ICvG9ZNoij0o9IOhdP6Nt1j1k=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>...</SignatureValue>
+<KeyInfo>
+<X509Data>
+<X509Certificate>...</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature>
+</eSocial>

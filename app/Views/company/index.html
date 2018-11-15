@@ -1,0 +1,39 @@
+<!--<div class="container">-->
+<div class="container-into">
+    <div class="row">
+        <div class="col-lg-2">
+            <h1 class="h1"><?php echo $this->getPageTitle(); ?></h1> 
+            <a href="/company/create" class="btn btn-default pull-right">
+                <i class="glyphicon glyphicon-plus-sign"> </i>
+                New Company
+            </a>
+        <hr>
+        </div>
+        
+        <?php $this->render('alerts/_success'); ?>
+        <?php $this->render('alerts/_errors'); ?>
+        
+        <div class="col-lg-10">
+        <?php foreach($this->view->companies as $company): ?>
+        <?php 
+            if($company->status == "active"):
+        ?>
+            <h3 class="h3">
+                <a href="/company/<?php echo $company->id; ?>/show"><?php echo $company->company; ?></a>
+            </h3>
+            <p><?php echo $company->business; ?></p>
+            <p class="text-right">
+                <a href="/company/<?php echo $company->id; ?>/edit" class="btn btn-warning btn-xs">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <a href="/company/<?php echo $company->id; ?>/delete" class="btn btn-danger btn-xs"
+                   onclick="return confirm('Deletar esta company?')">
+                    <i class="glyphicon glyphicon-remove-sign"></i>
+                </a>
+            </p>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+<!--</div>-->
