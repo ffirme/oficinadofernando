@@ -71,8 +71,8 @@ class MasterController
     }
 
     public static function pageNotFound(){
-        if (file_exists(__DIR__ . "/public/404.html")){
-            return require_once __DIR__ . "/public/404.html";
+        if (file_exists(__DIR__ . "/../app/Views/404.html")){
+            return require_once __DIR__ . "/../app/Views/404.html";
         }else{
             echo "Page not found!";
         }
