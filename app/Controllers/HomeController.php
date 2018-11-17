@@ -6,9 +6,13 @@ use Core\MasterController;
 
 class HomeController extends MasterController
 {
+    public function __construct() 
+    {
+        parent::__construct();
+    }
+
     public function index(){
-        $this->setPageTitle('Index');
-        $this->view->page = 'Página Index do eSocial';
+        $this->setPageTitle('eSocial');
         $this->render('home/index', 'layout');
     }
 }

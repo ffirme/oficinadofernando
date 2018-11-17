@@ -7,12 +7,14 @@ use Core\MasterModel;
 class CompanyModel extends MasterModel
 {
     protected $table = "companies";
-    
+    protected $fillable = ['company', 'business'];
+
+
     public function rules()
     {
         return [
-            'company' => 'required|email',
-            'business' => 'min:30|max:300'
+            'company' => 'min:2|max:30',
+            'business' => 'max:255'
         ];
     }
 }

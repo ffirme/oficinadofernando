@@ -22,6 +22,8 @@
                 <a href="/company/<?php echo $company->id; ?>/show"><?php echo $company->company; ?></a>
             </h3>
             <p><?php echo $company->business; ?></p>
+            <p>Criado em: <?php echo $company->created_at; ?></p>
+            <p>Atualizado em: <?php echo $company->updated_at; ?></p>
             <p class="text-right">
                 <a href="/company/<?php echo $company->id; ?>/edit" class="btn btn-warning btn-xs">
                     <i class="glyphicon glyphicon-pencil"></i>

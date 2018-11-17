@@ -15,58 +15,62 @@ class CompanyController extends MasterController{
         $this->company = MasterController::getModel('CompanyModel');
     }
 
-    public function index(){
-        if(Session::get('success')){
-            $this->view->success = Session::get('success');
-            Session::destroy('success');
-        }
-        if(Session::get('errors')){
-            $this->view->success = Session::get('errors');
-            Session::destroy('errors');
-        }
+    public function index()
+    {
         $this->setPageTitle('Companies');
         $this->view->companies = $this->company->All();
         $this->view->page = 'Página Companies do eSocial';
         return $this->render('company/index', 'layout');
     }
     
-    public function show($id){
+    public function show($id)
+    {
         $this->view->companies = $this->company->find($id);
         $this->setPageTitle("{$this->view->companies->company}");
         return $this->render('company/show', 'layout');
     }
     
-    public function create(){
+    public function create()
+    {
         $this->setPageTitle("New Company");
         return $this->render('company/create', 'layout');
     }
     
-    public function store($request){
+    public function store($request)
+    {
         $request->post->status = "active";
         $data = [
             'company' => $request->post->company,
             'business' => $request->post->business,
             'status' => $request->post->status
         ];
-        if($this->company->create($data)){
-            return MasterController::redirect('/companies');            
-        }else{
+        
+        if(Validator::make($data,  $this->company->rules()))
+        {
+            return MasterController::redirect('/company/create');
+        }        
+        
+        try{
+            $this->company->create($data);
             return MasterController::redirect('/companies', [
-                'errors' => ['Erro ao inserir no banco de dados!']
+                'success' => ['Company criada com sucesso.']
+            ]);
+        } catch (\Exception $ex) {
+            return MasterController::redirect('/companies', [
+                'errors' => [$e->getMessage()]
             ]);
         }
+//        if($this->company->create($data)){
+//            return MasterController::redirect('/companies');            
+//        }else{
+//            return MasterController::redirect('/companies', [
+//                'errors' => ['Erro ao inserir no banco de dados!']
+//            ]);
+//        }
     }
     
     public function edit($id)
     {   
-        if(Session::get('errors')){
-            $this->view->errors = Session::get('errors');
-            Session::destroy('errors');
-        }
-        if(Session::get('inputs')){
-            $this->view->inputs = Session::get('inputs');
-            Session::destroy('inputs');
-        }
         $this->view->company = $this->company->find($id);
         $this->setPageTitle('Edit Post - ' . $this->view->company->company);
         return $this->render('company/edit', 'layout');
@@ -76,31 +80,49 @@ class CompanyController extends MasterController{
         $data = [
             'company' => $request->post->company,
             'business' => $request->post->business
-        ];
-        
+        ];        
         if(Validator::make($data, $this->company->rules()))
         {
             return MasterController::redirect("/company/{$id}/edit");
         }
-        
-        if($this->company->update($data, $id)){
+        try{
+           $this->company->update($data, $id);
+           return MasterController::redirect('/companies', [
+               'success' => ['Atualizado com sucesso.']
+           ]);
+        } catch (\Exception $ex) {
             return MasterController::redirect('/companies', [
-                'success' => ['Company atualizado com sucesso!']
-            ]);
-        }else{
-            return MasterController::redirect('/companies', [
-                'errors' => ['Erro ao atualizar!']
+                'errors' => [$e->getMessage()]
             ]);
         }
+//        if($this->company->update($data, $id)){
+//            return MasterController::redirect('/companies', [
+//                'success' => ['Company atualizado com sucesso!']
+//            ]);
+//        }else{
+//            return MasterController::redirect('/companies', [
+//                'errors' => ['Erro ao atualizar!']
+//            ]);
+//        }
     }
     
     public function delete($id){
-        if($this->company->delete($id)){
-            return MasterController::redirect('/companies');
-        }else{
+        try{
+            $this->company->delete($id);
             return MasterController::redirect('/companies', [
-                'errors' => ['Erro ao excluir!']
+                'success' => ['Company excluída com sucesso.']
+            ]);
+        } catch (\Exception $ex) {
+            return MasterController::redirect('/companies', [
+                'errors' => [$e->getMessage()]
             ]);
         }
+//        if($this->company->delete($id)){
+//            return MasterController::redirect('/companies');
+//        }else{
+//            return MasterController::redirect('/companies', [
+//                'errors' => ['Erro ao excluir!']
+//            ]);
+//        }
     }
 }

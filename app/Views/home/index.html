@@ -1,8 +1,12 @@
 <div class="container-into">
     <div class="row">
         <div class="col-lg-2">
-            <h1>eSocial</h1>
+            <h1><?php echo $this->getPageTitle(); ?></h1>
             <hr>
         </div>
+    </div>
+    <div class="row">
+    	<?php $this->render('alerts/_success'); ?>
+        <?php $this->render('alerts/_errors'); ?>
     </div>
 </div>
